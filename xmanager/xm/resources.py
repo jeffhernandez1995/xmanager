@@ -187,7 +187,7 @@ GpuType = _enum_subset(
         ResourceType.P100,
         ResourceType.V100,
         ResourceType.A100,
-        ResourceType.A100_80GIB,
+        ResourceType.A100_80GB,
         ResourceType.H100,
     ],
 )

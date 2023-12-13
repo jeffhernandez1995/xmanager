@@ -304,7 +304,7 @@ def get_machine_spec(job: xm.Job) -> Dict[str, Any]:
     accelerator_type = None
     if resource in xm.GpuType:
       if '80GB' in str(resource):
-        accelerator_type = 'NVIDIA_TESLA_A100'
+        accelerator_type = 'NVIDIA_A100_80GB'
       else:
         accelerator_type = 'NVIDIA_TESLA_' + str(resource).upper()
     elif resource in xm.TpuType:
