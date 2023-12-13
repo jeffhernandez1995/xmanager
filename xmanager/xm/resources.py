@@ -65,7 +65,7 @@ class ResourceType(enum.Enum, metaclass=_CaseInsensetiveResourceTypeMeta):
   P100 = 14
   V100 = 17
   A100 = 46
-  A100_80GIB = 66
+  A100_80GB = 66
   H100 = 70
 
   # TPUs

@@ -63,6 +63,13 @@ _A100_GPUS_TO_MACHINE_TYPE = {
     16: 'a2-megagpu-16g',
 }
 
+_A100_80GB_TO_MACHINE_TYPE = {
+    1: 'a2-ultragpu-1g',
+    2: 'a2-ultragpu-2g',
+    4: 'a2-ultragpu-4g',
+    8: 'a2-ultragpu-8g',
+}
+
 _CLOUD_TPU_ACCELERATOR_TYPES = {
     xm.ResourceType.TPU_V2: 'TPU_V2',
     xm.ResourceType.TPU_V3: 'TPU_V3',
@@ -296,7 +303,10 @@ def get_machine_spec(job: xm.Job) -> Dict[str, Any]:
   for resource, value in requirements.task_requirements.items():
     accelerator_type = None
     if resource in xm.GpuType:
-      accelerator_type = 'NVIDIA_TESLA_' + str(resource).upper()
+      if '80GB' in str(resource):
+        accelerator_type = 'NVIDIA_TESLA_A100'
+      else:
+        accelerator_type = 'NVIDIA_TESLA_' + str(resource).upper()
     elif resource in xm.TpuType:
       accelerator_type = _CLOUD_TPU_ACCELERATOR_TYPES[resource]
     if accelerator_type:
@@ -311,6 +321,17 @@ def get_machine_spec(job: xm.Job) -> Dict[str, Any]:
     if not spec.get('machine_type', None):
       raise ValueError(
           'a100={} does not fit in any valid machine type'.format(
+              spec['accelerator_count']
+          )
+      )
+  elif accelerator and accelerator == aip_v1.AcceleratorType.NVIDIA_A100_80GB:
+    for gpus, machine_type in sorted(_A100_80GB_TO_MACHINE_TYPE.items()):
+      if spec['accelerator_count'] <= gpus:
+        spec['machine_type'] = machine_type
+        break
+    if not spec.get('machine_type', None):
+      raise ValueError(
+          'a100_80gb={} does not fit in any valid machine type'.format(
               spec['accelerator_count']
           )
       )
