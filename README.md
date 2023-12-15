@@ -1,7 +1,7 @@
 # XManager: A framework for managing machine learning experiments 🧑‍🔬
 
 <!-- Note that links in README.md have to be absolute as it also lands on PyPI. -->
-## FIXES [issue 32](https://github.com/google-deepmind/xmanager/issues/37)
+## FIXES [issue 37](https://github.com/google-deepmind/xmanager/issues/37)
 
 XManager is a platform for packaging, running and keeping track of machine
 learning experiments. It currently enables one to launch experiments locally or
